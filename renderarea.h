@@ -11,7 +11,7 @@ public:
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;
 
-    enum ShapeType {Asteroid,Cycloid,HuygensCycloid,HypoCycloid};
+    enum ShapeType {Asteroid,Cycloid,HuygensCycloid,HypoCycloid,FutureCurve};
 
     void setBackgroundColor(QColor color) {
         mBackgroundColor = color;
@@ -29,6 +29,12 @@ signals:
 private:
     void on_shape_changed();
     QPointF compute_asteroid(float t);
+    QPointF compute_cycloid(float t);
+    QPointF compute_huygens(float t);
+    QPointF compute_hypo(float t);
+    QPointF compute(float t);
+    QPointF compute_future_curve(float t);
+
 
 private:
     QColor mBackgroundColor;

@@ -21,10 +21,21 @@ void RenderArea::on_shape_changed () {
             mStepcount = 256;
             break;
         case Cycloid:
+            mScale = 4;
+            mIntervalLength = 6*M_PI;
+            mStepcount = 128;
             break;
         case HuygensCycloid:
+            mScale = 4;
+            mIntervalLength = 4*M_PI;
+            mStepcount = 256;
             break;
         case HypoCycloid:
+            mScale = 15;
+            mIntervalLength = 2*M_PI;
+            mStepcount = 256;
+            break;
+        case FutureCurve:
             break;
         default:
             break;
@@ -40,6 +51,60 @@ QPointF RenderArea::compute_asteroid (float t) {
     return QPointF(x,y);
 
 }
+
+QPointF RenderArea:: compute (float t) {
+
+    switch (mShape) {
+        case Asteroid:
+            return compute_asteroid(t);
+            break;
+        case Cycloid:
+            return compute_cycloid(t);
+            break;
+        case HuygensCycloid:
+            return compute_huygens(t);
+            break;
+        case HypoCycloid:
+            return compute_hypo(t);
+            break;
+        case FutureCurve:
+            return compute_future_curve(t);
+            break;
+        default:
+            break;
+
+    }
+    return QPointF(0,0);
+}
+
+
+QPointF RenderArea:: compute_future_curve (float t) {
+
+
+}
+
+QPointF RenderArea:: compute_cycloid (float t) {
+    return QPointF(
+                1.5*(1-cos(t)),
+                1.5*(t-sin(t))
+                );
+}
+
+QPointF RenderArea:: compute_huygens (float t) {
+    return QPoint(4*(3*cos(t) -cos(3*t)),
+                  4*(3*sin(t) - sin(3*t)));
+
+
+}
+
+QPointF RenderArea:: compute_hypo (float t) {
+    return QPoint(
+            1.5*(2*cos(t) + cos(2*t)),
+            1.5*(2*sin(t) - sin(2*t))
+                );
+}
+
+
 
 QSize RenderArea:: minimumSizeHint() const
 {
@@ -68,7 +133,7 @@ void RenderArea::paintEvent(QPaintEvent *event) {
     float step = mIntervalLength/mStepcount;
     for (float t=0;t<mIntervalLength;t +=step)
     {
-            QPointF point = compute_asteroid(t);
+            QPointF point = compute(t);
             QPoint pixel;
             pixel.setX(point.x()*mScale + center.x());
             pixel.setY(point.y()*mScale + center.y());
