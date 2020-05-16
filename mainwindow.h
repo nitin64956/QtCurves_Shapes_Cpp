@@ -26,6 +26,29 @@ private slots:
 
     void on_btnHypo_clicked();
 
+    void on_btnline_clicked();
+
+    void on_spinScale_valueChanged(double arg1);
+    void on_spinInterval_valueChanged(double arg1);
+
+    void on_spinCount_valueChanged(int arg1);
+
+    void on_btnBackGround_clicked();
+
+    void on_btnLineColor_clicked();
+
+    void on_btnCircle_clicked();
+
+    void on_btnEllipse_clicked();
+
+    void on_btnfancy_clicked();
+
+    void on_btnstar_clicked();
+
+private:
+    void update_ui();
+
+
 private:
     Ui::MainWindow *ui;
 };
